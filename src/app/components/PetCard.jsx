@@ -1,5 +1,6 @@
 import { Button } from "@heroui/react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
@@ -22,6 +23,7 @@ const PetCard = ({ pet }) => {
   // "description": "Buddy is a friendly and energet
 
   const {
+    _id,
     petName,
     breed,
     species,
@@ -45,23 +47,47 @@ const PetCard = ({ pet }) => {
         <div className="card-body">
           <h2 className="card-title text-xl font-bold">
             {petName}
-            <div className="badge border-[#C8714A] bg-[#FBF8F3] text-[#C8714A]">{species}</div>
+            <div className="badge border-[#C8714A] bg-[#FBF8F3] text-[#C8714A]">
+              {species}
+            </div>
           </h2>
           <div className="text-gray-500 flex ">
-           <p>{breed}</p>
-           <p className="items-center flex"><LuDot />{age}</p>
-           <p className="items-center flex"><LuDot />{gender}</p>      
+            <p>{breed}</p>
+            <p className="items-center flex">
+              <LuDot />
+              {age}
+            </p>
+            <p className="items-center flex">
+              <LuDot />
+              {gender}
+            </p>
           </div>
 
           <div>
-            <p className="flex font-medium items-center gap-1"><FaLocationDot />{location}, Bangladesh</p>
-            <p className="flex font-medium items-center gap-1"><TbCoinTakaFilled />{fee}</p>
+            <p className="flex font-medium items-center gap-1">
+              <FaLocationDot />
+              {location}, Bangladesh
+            </p>
+            <p className="flex font-medium items-center gap-1">
+              <TbCoinTakaFilled />
+              {fee}
+            </p>
           </div>
           <div className="card-actions justify-end">
-          <Button className={"bg-[#3D6B4F]"}> Meet {petName} <FaArrowRight /></Button>
-          <Button className={ " shadow-sm border-[#3D6B4F] bg-[#FBF8F3] text-[#3D6B4F]"}> Adopt {petName}</Button>
+            <Link href={`/allpets/${_id}`}>
+              <Button className={"bg-[#3D6B4F]"}>
+                Meet {petName} <FaArrowRight />
+              </Button>
+            </Link>
+
+            <Button
+              className={
+                " shadow-sm border-[#3D6B4F] bg-[#FBF8F3] text-[#3D6B4F]"
+              }
+            >
+              Adopt Now
+            </Button>
           </div>
-          
         </div>
       </div>
     </div>
