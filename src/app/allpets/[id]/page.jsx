@@ -8,6 +8,7 @@ import {
   ListBox,
   TextArea,
 } from "@heroui/react";
+import Image from "next/image";
 import React from "react";
 import { FaGem, FaLocationDot } from "react-icons/fa6";
 import { MdHealthAndSafety } from "react-icons/md";
@@ -51,12 +52,15 @@ const PetDetailsPage = async ({ params }) => {
     <div>
       <div className="container mx-auto mt-20 mb-10 grid sm:grid-cols-1 lg:grid-cols-2">
         {/* Left */}
-        <div className="card  w-96 shadow-xl border-[#3D6B4F] border-2 w-full">
-          {/* <Image src={imageUrl}
-             alt="breed"
-             width={500}
-             height={500}>
-             </Image> */}
+        <div className="card  w-full= shadow-xl border-[#3D6B4F] border-2">
+          <div className="relative  h-48 overflow-hidden rounded-t-lg">
+            <Image
+              src={imageUrl}
+              alt="breed"
+              fill
+              className="object-cover"
+            ></Image>
+          </div>
           <div className="card-body">
             <h2 className="card-title text-xl font-bold">{petName}</h2>
             <div className="text-gray-500 flex ">

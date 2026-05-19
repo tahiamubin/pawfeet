@@ -2,14 +2,14 @@
 const nextConfig = {
   /* config options here */
   reactCompiler: true,
-  // images: {
-  //   remotePatterns: [
-  //     {
-  //       protocol: "https",
-  //       hostnameL: "cdn.pixabay.com",
-  //     },
-  //   ]
-  // }
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.pixabay.com",
+      },
+    ]
+  }
 };
 
 export default nextConfig;

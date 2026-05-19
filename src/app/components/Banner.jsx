@@ -3,8 +3,11 @@ import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { PiDogFill } from "react-icons/pi";
 import BannerCard from "./BannerCard";
+import PetCard from "./PetCard";
 
-const Banner = () => {
+const Banner = async () => {
+  const res = await fetch("http://localhost:5000/all-pet");
+  const pets = await res.json();
   return (
     <div>
       <div className="hero bg-[#FBF8F3] min-h-screen">
@@ -65,20 +68,29 @@ const Banner = () => {
           </div>
         </div>
       </div>
-           
-       {/* available pet     */}
-      <div className="bg-[#EBF3EE] pt-5">
-         <div className="container mx-auto mt-20">
-      <div>
-        <div
-          className="badge badge-soft mb-5 bg-[#bbcec2] text-[#3D6B4F]"
-        >
-          Available now
+
+      {/* available pet     */}
+      <div className="bg-[#EBF3EE] pt-5 pb-10">
+        <div className="container mx-auto mt-20">
+          {/* Features pets */}
+          <div className="mb-5">
+            <div className="badge badge-soft mb-5 bg-[#bbcec2] text-[#3D6B4F] ">
+              Available now
+            </div>
+            <h1 className="text-5xl font-bold">
+              Meet your future <span className="text-[#3D6B4F]">companion</span>
+            </h1>
+            <p className="text-xl pt-4 pb-4 text-gray-500">
+              Browse pets from verified shelters and rescue centres across{" "}
+              <br /> Bangladesh.
+            </p>
+          </div>
+          <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 gap-8 mt-20 mb-20">
+            {pets.slice(3, 10).map((pet) => (
+              <PetCard key={pet._id} pet={pet}></PetCard>
+            ))}
+          </div>
         </div>
-        <h1 className="text-5xl font-bold">Meet your future <span className="text-[#3D6B4F]">companion</span></h1>
-        <p className="text-xl pt-4 pb-4 text-gray-500">Browse pets from verified shelters and rescue centres across <br /> Bangladesh.</p>
-      </div>
-    </div>
       </div>
 
       <BannerCard></BannerCard>
