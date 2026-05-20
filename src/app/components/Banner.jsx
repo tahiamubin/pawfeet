@@ -8,6 +8,7 @@ import WhyAdopt from "./WhyAdopt";
 import { SuccessIcon } from "@heroui/react";
 import SuccessStories from "./SuccessStories";
 import PetCare from "./PetCare";
+import AdoptionSteps from "./AdoptionSteps";
 
 const Banner = async () => {
   const res = await fetch("http://localhost:5000/all-pet");
@@ -72,6 +73,7 @@ const Banner = async () => {
           </div>
         </div>
       </div>
+      <BannerCard></BannerCard>
 
       {/* available pet     */}
       <div className="bg-[#EBF3EE] pt-5 pb-10">
@@ -105,7 +107,10 @@ const Banner = async () => {
 
       {/* pet care */}
       <PetCare></PetCare>
-      <BannerCard></BannerCard>
+       
+       {/* adoption steps */}
+      <AdoptionSteps></AdoptionSteps>
+      
     </div>
   );
 };

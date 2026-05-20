@@ -3,7 +3,7 @@ import React from "react";
 const SuccessStories = () => {
   return (
     <div>
-      <section className="py-16 px-6" style={{ backgroundColor: "#EBF3EE" }}>
+      <section className="py-16 px-6" style={{ backgroundColor: "#5A8F6E" }}>
         <h2
           className="text-4xl font-bold text-center mb-4"
           style={{ color: "#1A1A1A" }}
@@ -12,7 +12,7 @@ const SuccessStories = () => {
         </h2>
         <p
           className="text-center mb-12 max-w-xl mx-auto"
-          style={{ color: "#5A8F6E" }}
+          style={{ color: "#FBF8F3" }}
         >
           Real families, real love — hear from those who opened their hearts.
         </p>
