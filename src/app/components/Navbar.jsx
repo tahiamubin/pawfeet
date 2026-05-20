@@ -1,17 +1,19 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
-import { Avatar } from "@heroui/react";
+import { Avatar, Button } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 
 const Navbar = () => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
-  //console.log(user);
+  console.log(user);
   const handleSignout = async () => {
     await authClient.signOut()
+    
   }
+  
   
   const MobileLinks = (
     <>
@@ -103,7 +105,7 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{DesktopLinks}</ul>
         </div>
-        <ul className="flex gap-3 items-center justify-end">
+        <ul className="flex gap-3  justify-end">
         {user ? (
           <>
             <Avatar>
@@ -111,7 +113,7 @@ const Navbar = () => {
               <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
             </Avatar>
             <li>
-              <Link href="/" onClick={handleSignout}>Logout</Link>
+              <Link href="/" onClick={handleSignout}>Sign out</Link>
             </li>
           </>
         ) : (
@@ -120,10 +122,14 @@ const Navbar = () => {
               <Link href={"/profile"}>Profile</Link>
             </li> */}
             <li>
-              <Link href={"/signin"}>Sign in</Link>
+              <Link href={"/signin"}>
+              <Button className={"bg-[#3D6B4F]"}>Signin</Button>
+              </Link>
             </li>
             <li>
-              <Link href={"/signup"}>Sign Up</Link>
+              <Link href={"/signup"}>
+              <Button className={"bg-[#3D6B4F]"}>Signup</Button>
+              </Link>
             </li>
           </>
         )}

@@ -14,28 +14,28 @@ import {
 import { toast } from "react-toastify";
 
 const signInPage = () => {
-   const onSubmit = async (e) => {
+ 
+  const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const user = Object.fromEntries(formData.entries());
     console.log(user);
 
     const { data, error } = await authClient.signIp.email({
-      email: user.email, 
+      email: user.email,
       password: user.password,
-  
     });
     if (data) {
       redirect("/");
     }
     if (error) {
-    toast.error("Signup not successful"); 
-  }
+      toast.error("Signup not successful");
+    }
   };
-  
+
   return (
-    <div className="mt-10 mb-10">
-      <Card className="container mx-auto">
+    <div className="mt-20 mb-40">
+      <Card className="container mx-auto w-96">
         <Form onSubmit={onSubmit} className="flex  flex-col gap-4 w-full">
           <TextField
             isRequired
@@ -58,7 +58,7 @@ const signInPage = () => {
             minLength={8}
             name="password"
             type="password"
-             className={"w-96"}
+            className={"w-96"}
             validate={(value) => {
               if (value.length < 8) {
                 return "Password must be at least 8 characters";
@@ -84,7 +84,11 @@ const signInPage = () => {
               <Checkbox />
               Sign In
             </Button>
-            <Button type="reset" variant="secondary" className={"text-[#3D6B4F]"}>
+            <Button
+              type="reset"
+              variant="secondary"
+              className={"text-[#3D6B4F]"}
+            >
               Reset
             </Button>
           </div>

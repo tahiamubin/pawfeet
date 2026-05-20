@@ -21,7 +21,7 @@ const signUpPage = () => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const user = Object.fromEntries(formData.entries());
-    console.log(user);
+    //console.log(user);
 
     const { data, error } = await authClient.signUp.email({
       email: user.email,
@@ -33,12 +33,17 @@ const signUpPage = () => {
       redirect("/");
     }
     if (error) {
-    toast.error("Signup not successful"); 
-  }
+      toast.error("Signup not successful");
+    }
+  };
+  const handleSignIn = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
   };
   return (
     <div>
-      <Card className="container mx-auto mt-20 mb-20">
+      <Card className="container mx-auto mt-20 mb-20 w-96 ">
         <Form
           onSubmit={onSubmit}
           className="flex w-full flex-col gap-4 items-center"
@@ -119,7 +124,11 @@ const signUpPage = () => {
             >
               Create account
             </Button>
-            <Button type="button" className={"bg-[#3D6B4F]"}>
+            <Button
+              onClick={handleSignIn}
+              type="button"
+              className={"bg-[#3D6B4F]"}
+            >
               Sign in with Google
             </Button>
           </div>
