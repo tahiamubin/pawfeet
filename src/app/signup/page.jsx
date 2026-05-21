@@ -72,7 +72,9 @@ const signUpPage = () => {
             <Input placeholder="https://example.com" />
             <FieldError />
           </TextField>
+          
 
+          {/* email */}
           <TextField
             isRequired
             name="email"
@@ -89,7 +91,9 @@ const signUpPage = () => {
             <Input placeholder="john@example.com" />
             <FieldError />
           </TextField>
+          
 
+          {/* password */}
           <TextField
             isRequired
             minLength={8}

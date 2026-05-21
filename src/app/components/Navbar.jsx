@@ -8,13 +8,11 @@ import Link from "next/link";
 const Navbar = () => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
-  console.log(user);
+  //console.log(user);
   const handleSignout = async () => {
-    await authClient.signOut()
-    
-  }
-  
-  
+    await authClient.signOut();
+  };
+
   const MobileLinks = (
     <>
       <li>
@@ -36,7 +34,7 @@ const Navbar = () => {
               <Link href={"/dashboard/add-pet"}>Add pet</Link>
             </li>
             <li>
-              <a>My listings</a>
+              <Link href={"/my-listings"}>My listings</Link>
             </li>
           </ul>
         </details>
@@ -65,7 +63,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="bg-[#fff5f0] sticky top-0 z-50">
+    <div className="bg-[#fff5f0] sticky top-0 z-50 ">
       <div className="navbar shadow-sm">
         <div className="navbar-start">
           <div className="dropdown">
@@ -102,38 +100,37 @@ const Navbar = () => {
             height={150}
           />
         </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{DesktopLinks}</ul>
+        <div className="navbar  hidden lg:flex                                                                         ">
+          <ul className="menu menu-horizontal px-1 ">{DesktopLinks}</ul>
         </div>
         <ul className="flex gap-3  justify-end">
-        {user ? (
-          <>
-            <Avatar>
-              <Avatar.Image alt={user?.name} src={user?.image} />
-              <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
-            </Avatar>
-            <li>
-              <Link href="/" onClick={handleSignout}>Sign out</Link>
-            </li>
-          </>
-        ) : (
-          <>
-            {/* <li>
-              <Link href={"/profile"}>Profile</Link>
-            </li> */}
-            <li>
-              <Link href={"/signin"}>
-              <Button className={"bg-[#3D6B4F]"}>Signin</Button>
-              </Link>
-            </li>
-            <li>
-              <Link href={"/signup"}>
-              <Button className={"bg-[#3D6B4F]"}>Signup</Button>
-              </Link>
-            </li>
-          </>
-        )}
-      </ul>
+          {user ? (
+            <div className="flex justify-end items-center gap-5 ">
+              <Avatar>
+                <Avatar.Image alt={user?.name} src={user?.image} />
+                <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
+              </Avatar>
+              <li>
+                <Button onClick={handleSignout} className={"bg-[#3D6B4F]"}>
+                  Sign out
+                </Button>
+              </li>
+            </div>
+          ) : (
+            <>
+              <li>
+                <Link href={"/signin"}>
+                  <Button className={"bg-[#3D6B4F]"}>Signin</Button>
+                </Link>
+              </li>
+              <li>
+                <Link href={"/signup"}>
+                  <Button className={"bg-[#3D6B4F]"}>Signup</Button>
+                </Link>
+              </li>
+            </>
+          )}
+        </ul>
       </div>
     </div>
   );

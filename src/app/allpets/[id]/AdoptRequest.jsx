@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   FieldError,
@@ -11,9 +12,14 @@ import {
   TextArea,
 } from "@heroui/react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const AdoptRequest = ({ pet }) => {
   const [adopt, setAdopt] = useState(false);
+  const [pickupDate, setPickupDate] = useState(null);
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+  //console.log(user)
   const {
     _id,
     petName,
@@ -28,67 +34,98 @@ const AdoptRequest = ({ pet }) => {
     vaccine,
     description,
   } = pet;
+  const handleListings = async () => {
+    const listingData = {
+      userName: user?.name,
+      userEmail: user?.email,
+      userImage: user?.image,
+      _id,
+      petName,
+      fee,
+      imageUrl,
+      breed,
+      species,
+      gender,
+      age,
+      health,
+      fee,
+      location,
+      imageUrl,
+      vaccine,
+      description,
+    };
+    const res = await fetch("/http://localhost:5000/listing", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(listingData),
+    });
+    const data = await res.json();
+    toast.success("Added to My Listings");
+    //console.log(data);
+  };
+
   return (
     <div>
       {adopt ? (
         <div className="ml-15">
-            <div className="card bg-green-50 border border-green-700 shadow-xl max-w-sm ">
-          <div className="card-body flex-row items-start gap-4 p-5">
-            <div className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center shrink-0 mt-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-            </div>
-
-            <div className="flex-1">
-              <h2 className="card-title text-green-800 text-xl font-bold">
-                Request Sent!
-              </h2>
-              <p className="text-neutral-900 text-sm mt-1">
-                Your adoption request for{" "}
-                <span className="font-semibold">{petName}</span> has been sent to the
-                owner. You can track its status in the{" "}
-                <a
-                  href="/my-request"
-                  className="text-orange-600 underline font-medium"
+          <div className="card bg-green-50 border border-green-700 shadow-xl max-w-sm ">
+            <div className="card-body flex-row items-start gap-4 p-5">
+              <div className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center shrink-0 mt-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
                 >
-                  My Request
-                </a>{" "}
-                page.
-              </p>
-            </div>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
 
-            <button className="text-green-600 shrink-0 mt-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+              <div className="flex-1">
+                <h2 className="card-title text-green-800 text-xl font-bold">
+                  Request Sent!
+                </h2>
+                <p className="text-neutral-900 text-sm mt-1">
+                  Your adoption request for{" "}
+                  <span className="font-semibold">{petName}</span> has been sent
+                  to the owner. You can track its status in the{" "}
+                  <a
+                    href="/my-request"
+                    className="text-orange-600 underline font-medium"
+                  >
+                    My Request
+                  </a>{" "}
+                  page.
+                </p>
+              </div>
+
+              <button className="text-green-600 shrink-0 mt-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-        </div>
-        
       ) : (
         <form className="p-10 space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -114,19 +151,30 @@ const AdoptRequest = ({ pet }) => {
               </TextField>
             </div>
             {/* email */}
-            <div className="md:col-span-2">
-              <TextField name="email" type="email" isRequired>
-                <Label>Email</Label>
-                <Input
-                  placeholder="admin12@gmail.com"
-                  className="rounded-2xl"
-                />
-                <FieldError />
-              </TextField>
-            </div>
+            <TextField
+              isRequired
+              name="email"
+              type="email"
+              className="md:col-span-2"
+              validate={(value) => {
+                if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+                  return "Please enter a valid email address";
+                }
+                return null;
+              }}
+            >
+              <Label>Email</Label>
+              <Input placeholder="john@example.com" />
+              <FieldError />
+            </TextField>
             {/* pickup Date */}
             <div className="md:col-span-2">
-              <TextField name="Pickup-date" type="date" isRequired>
+              <TextField
+                onChange={setPickupDate}
+                name="Pickup-date"
+                type="date"
+                isRequired
+              >
                 <Label>Preferred Pickup Date</Label>
                 <Input type="date" className="rounded-2xl" />
                 <FieldError />
@@ -146,7 +194,8 @@ const AdoptRequest = ({ pet }) => {
           {/* Buttons */}
 
           <Button
-            onClick={() => setAdopt(true)}
+            onClick={handleListings}
+            // onClick={() => setAdopt(true)}
             className={"bg-[#3D6B4F] w-full shadow-sm"}
           >
             Adopt Now
