@@ -21,7 +21,8 @@ const AdoptRequest = ({ pet }) => {
   const user = session?.user;
   //console.log(user)
   const {
-    _id,
+    petId: _id,
+    // _id
     petName,
     breed,
     species,
