@@ -1,7 +1,8 @@
-import React from "react";
+
 import PetCard from "../components/PetCard";
 
 const allPetsPage = async () => {
+  
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-pet`);
   const pets = await res.json();
   //console.log(pets)
@@ -13,6 +14,7 @@ const allPetsPage = async () => {
           <PetCard key={pet._id} pet={pet}></PetCard>
         ))}
       </div>
+    
     </div>
   );
 };

@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
@@ -9,6 +10,7 @@ import { SuccessIcon } from "@heroui/react";
 import SuccessStories from "./SuccessStories";
 import PetCare from "./PetCare";
 import AdoptionSteps from "./AdoptionSteps";
+import Link from "next/link";
 
 const Banner = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-pet`);
@@ -29,7 +31,8 @@ const Banner = async () => {
           ></Image>
 
           <div>
-            <div className="badge badge-soft p-3 bg-[#fcf3ef] text-[#C8714A] text-xl rounded-4xl border-[#C8714A]">
+            <div className="badge badge-soft badge-sm p-3 bg-[#fcf3ef] text-[#C8714A] text-sm
+             rounded-4xl border-[#C8714A]  ">
               <PiDogFill />
               Bangladesh's #1 Adoption Platform
             </div>
@@ -42,30 +45,32 @@ const Banner = async () => {
               forever family. Adopt, don't shop — and change a life today
             </p>
 
-            <div className="grid grid-cols-3 gap-4 container mx-auto mt-5">
+            <div className="grid lg:grid-cols-3 grid-cols-2 gap-4 container mx-auto mt-5">
               <div className="card-body shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:scale-105 cursor-pointer group">
-                <h2 className="card-title text-5xl font-bold text-[#3D6B4F]  text-italic font-serif">
+                <h2 className="card-title text-4xl font-bold text-[#3D6B4F]  text-italic font-serif">
                   2500+
                 </h2>
                 <p>Pets available</p>
               </div>
               <div className="card-body shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:scale-105 cursor-pointer group">
-                <h2 className="card-title text-5xl font-bold text-[#3D6B4F] text-italic font-serif">
+                <h2 className="card-title text-4xl font-bold text-[#3D6B4F] text-italic font-serif">
                   940
                 </h2>
                 <p>Adopted this month</p>
               </div>
               <div className="card-body shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:scale-105 cursor-pointer group">
-                <h2 className="card-title text-5xl font-bold text-[#3D6B4F] text-italic font-serif">
+                <h2 className="card-title text-4xl font-bold text-[#3D6B4F] text-italic font-serif">
                   120+
                 </h2>
                 <p>Partner shelters</p>
               </div>
             </div>
-            <div className="flex gap-4 mt-10">
+            <div className="flex flex-col md:flex-row gap-4 mt-10">
+              <Link  href={"/allpets"} >
               <button className="btn  rounded-4xl px-4 py-5 bg-[#3D6B4F] text-xl font-medium text-white">
                 Browse Pet <FaArrowRight />
-              </button>
+              </button></Link>
+              
               <button className="btn text-xl font-medium  rounded-4xl px-4 py-5">
                 How it works
               </button>

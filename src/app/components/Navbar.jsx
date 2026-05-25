@@ -96,10 +96,12 @@ const Navbar = () => {
             </div>
           </div>
           <Image
+          className="hidden lg:block"
             src={"/images/logo 1-01.png"}
             alt="logo"
             width={150}
             height={150}
+            
           />
         </div>
         <div className="navbar  hidden lg:flex                                                                         ">
@@ -109,7 +111,7 @@ const Navbar = () => {
        
 
           {user ? (
-            <div className="flex justify-end items-center gap-5 ">
+            <div className="flex flex-col md:flex-row justify-end items-center gap-5  ">
               <Avatar>
                 <Avatar.Image alt={user?.name} src={user?.image} />
                 <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
