@@ -1,22 +1,30 @@
-"use client";
+import RequestSec from "@/app/components/RequestSec";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
-const myRequestPage = () => {
+const myRequestPage = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const user = session?.user;
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/listing/${encodeURIComponent(user?.email)} `,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  const listings = await res.json();
   return (
     <div className="container mx-auto">
-      <div className="overflow-x-auto rounded-xl  bg-[#FBF8F3] ">
-        <table className="table w-full  text-white">
-          <thead>
-            <tr className=" text-[#5C5C5C] text-sm font-semibold">
-              <th className=" bg-[#FBF8F3]  text-[#5C5C5C]">Pet Name</th>
-              <th className=" bg-[#FBF8F3]  text-[#5C5C5C]">Request Date</th>
-              <th className=" bg-[#FBF8F3]  text-[#5C5C5C]">Pickup Date</th>
-              <th className=" bg-[#FBF8F3]  text-[#5C5C5C]">Status</th>
-              <th className=" bg-[#FBF8F3]  text-[#5C5C5C] text-right">
-                <div className="badge badge-soft badge-success">Success</div>
-              </th>
-            </tr>
-          </thead>
-        </table>
+      <div>
+        {listings.map((listing) => (
+          <RequestSec listings={listing} key={listing._id}></RequestSec>
+        ))}
       </div>
     </div>
   );

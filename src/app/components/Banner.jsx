@@ -11,7 +11,7 @@ import PetCare from "./PetCare";
 import AdoptionSteps from "./AdoptionSteps";
 
 const Banner = async () => {
-  const res = await fetch("http://localhost:5000/all-pet");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-pet`);
   const pets = await res.json();
   return (
     <div>

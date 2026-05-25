@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import {
   FieldError,
   Input,
@@ -11,24 +12,31 @@ import {
   Button,
 } from "@heroui/react";
 import React from "react";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const AddPetPage = () => {
+  const { data: session } = authClient.useSession();
+
   const onSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData(e.currentTarget);
     const allPet = Object.fromEntries(formData.entries());
     console.log(allPet);
+    allPet.email = session?.user?.email;
 
-    const res = await fetch("http://localhost:5000/all-pet", {
+    const { data: tokenData } = await authClient.token();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-pet`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        authorization: `Bearer ${tokenData?.token}`,
       },
       body: JSON.stringify(allPet),
     });
     const data = await res.json();
     console.log(data);
+    toast.success("Added to My listings");
   };
 
   return (
@@ -208,7 +216,11 @@ const AddPetPage = () => {
           </div>
         </div>
 
-        <Button type="submit" className="w-full bg-[#3D6B4F]">
+        <Button
+          // onClick={handleToast}
+          type="submit"
+          className="w-full bg-[#3D6B4F]"
+        >
           Submit
         </Button>
       </form>

@@ -5,6 +5,8 @@ import { Avatar, Button } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 
+
+
 const Navbar = () => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
@@ -51,13 +53,13 @@ const Navbar = () => {
         <Link href={"/allpets"}>All pets</Link>
       </li>
       <li>
-        <a>My request</a>
+        <Link href={"/dashboard/my-listings"}>My listings</Link>
       </li>
       <li>
         <Link href={"/dashboard/add-pet"}>Add pet</Link>
       </li>
       <li>
-        <a>My listings</a>
+        <Link href={"/dashboard/my-request"}>My request</Link>
       </li>
     </>
   );
@@ -104,6 +106,8 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1 ">{DesktopLinks}</ul>
         </div>
         <ul className="flex gap-3  justify-end">
+       
+
           {user ? (
             <div className="flex justify-end items-center gap-5 ">
               <Avatar>

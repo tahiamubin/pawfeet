@@ -1,6 +1,3 @@
-
-
-
 import Image from "next/image";
 
 import { FaGem, FaLocationDot } from "react-icons/fa6";
@@ -8,15 +5,24 @@ import { MdHealthAndSafety } from "react-icons/md";
 import { PiGenderMaleFill } from "react-icons/pi";
 import { TbCoinTakaFilled, TbVaccine } from "react-icons/tb";
 import AdoptRequest from "./AdoptRequest";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const PetDetailsPage = async ({ params }) => {
   const { id } = await params;
-
-  const res = await fetch(`http://localhost:5000/all-pet/${id}`);
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  //  console.log("Deleting:", listingId);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-pet/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
   const pet = await res.json();
 
   //console.log(pet)
-    const {
+  const {
     _id,
     petName,
     breed,

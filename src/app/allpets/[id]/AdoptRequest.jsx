@@ -21,8 +21,7 @@ const AdoptRequest = ({ pet }) => {
   const user = session?.user;
   //console.log(user)
   const {
-    petId: _id,
-    // _id
+    _id: petId,
     petName,
     breed,
     species,
@@ -34,13 +33,14 @@ const AdoptRequest = ({ pet }) => {
     imageUrl,
     vaccine,
     description,
+  
   } = pet;
   const handleListings = async () => {
     const listingData = {
       userName: user?.name,
       userEmail: user?.email,
       userImage: user?.image,
-      _id,
+      petId,
       petName,
       breed,
       species,
@@ -52,8 +52,10 @@ const AdoptRequest = ({ pet }) => {
       imageUrl,
       vaccine,
       description,
+      pickupDate,
+      requestDate: new Date().toISOString()
     };
-    const res = await fetch("http://localhost:5000/listing", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/listing`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -62,7 +64,7 @@ const AdoptRequest = ({ pet }) => {
     });
     const data = await res.json();
     console.log(data);
-    toast.success("Added to My Listings");
+    toast.success("Added to My request");
     setAdopt(true);
   };
 
@@ -90,7 +92,7 @@ const AdoptRequest = ({ pet }) => {
               </div>
 
               <div className="flex-1">
-                <h2 className="card-title text-green-800 text-xl font-bold">
+                <h2   className="card-title text-green-800 text-xl font-bold">
                   Request Sent!
                 </h2>
                 <p className="text-neutral-900 text-sm mt-1">
@@ -98,7 +100,7 @@ const AdoptRequest = ({ pet }) => {
                   <span className="font-semibold">{petName}</span> has been sent
                   to the owner. You can track its status in the{" "}
                   <a
-                    href="/my-request"
+                    href={"/dashboard/my-request"}
                     className="text-orange-600 underline font-medium"
                   >
                     My Request
