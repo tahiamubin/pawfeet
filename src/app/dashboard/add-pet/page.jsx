@@ -17,25 +17,59 @@ import toast, { Toaster } from "react-hot-toast";
 const AddPetPage = () => {
   const { data: session } = authClient.useSession();
 
+  // const onSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const formData = new FormData(e.currentTarget);
+  //   const allPet = Object.fromEntries(formData.entries());
+  //   console.log(allPet);
+  //   allPet.email = session?.user?.email;
+
+  //   const { data: tokenData } = await authClient.token();
+  //   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-pet`, {
+  //     method: "POST",
+  //     headers: {
+  //       "content-type": "application/json",
+  //       authorization: `Bearer ${tokenData?.token}`,
+  //     },
+  //     body: JSON.stringify(allPet),
+  //   });
+  //   const data = await res.json();
+  //   console.log(data);
+  //   toast.success("Added to My listings");
+  // };
   const onSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const allPet = Object.fromEntries(formData.entries());
-    console.log(allPet);
     allPet.email = session?.user?.email;
 
     const { data: tokenData } = await authClient.token();
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-pet`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        authorization: `Bearer ${tokenData?.token}`,
-      },
-      body: JSON.stringify(allPet),
-    });
-    const data = await res.json();
-    console.log(data);
+
+    const headers = {
+      "content-type": "application/json",
+      authorization: `Bearer ${tokenData?.token}`,
+    };
+
+    // Post to both endpoints simultaneously
+    const [allPetRes, listingRes] = await Promise.all([
+      fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-pet`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(allPet),
+      }),
+      fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/listing`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ ...allPet, userEmail: session?.user?.email }),
+      }),
+    ]);
+
+    const allPetData = await allPetRes.json();
+    const listingData = await listingRes.json();
+
+    console.log(allPetData, listingData);
     toast.success("Added to My listings");
   };
 

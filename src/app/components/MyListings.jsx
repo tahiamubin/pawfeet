@@ -89,7 +89,7 @@ const MyListings = ({ pets }) => {
 
         <div className="card-actions mt-4 flex flex-col gap-2">
           <div className="flex gap-2 w-full">
-            <Link href={`http://localhost:3000/allpets/${petId}`}>
+            <Link href={`${process.env.NEXT_PUBLIC_SERVER_URL}/all-pet/${petId}`}>
               <button className="btn btn-sm flex-1 bg-[#3D6B4F] hover:bg-[#5A8F6E] text-white border-[#3a3a3a] rounded-xl gap-1">
                 <GrFormView />
                 View
