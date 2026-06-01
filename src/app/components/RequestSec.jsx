@@ -1,6 +1,6 @@
 "use client"
 
-const RequestSec = ({ listings }) => {
+const RequestSec = ({ listing }) => {
   const {
     imageUrl,
     petName,
@@ -12,7 +12,7 @@ const RequestSec = ({ listings }) => {
     requestDate,
     pickupDate,
     status,
-  } = listings;
+  } = listing;
 
   return (
     <div className="overflow-x-auto rounded-xl bg-[#FBF8F3]">

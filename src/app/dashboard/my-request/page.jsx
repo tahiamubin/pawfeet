@@ -11,7 +11,7 @@ const myRequestPage = async () => {
     headers: await headers(),
   });
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/listing/${encodeURIComponent(user?.email)} `,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/listing/${encodeURIComponent(user?.email)}`,
     {
       headers: {
         authorization: `Bearer ${token}`,
@@ -23,7 +23,7 @@ const myRequestPage = async () => {
     <div className="container mx-auto">
       <div>
         {listings.map((listing) => (
-          <RequestSec listings={listing} key={listing._id}></RequestSec>
+          <RequestSec listing={listing} key={listing._id}></RequestSec>
         ))}
       </div>
     </div>
