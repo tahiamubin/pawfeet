@@ -26,8 +26,8 @@ const PetCard = ({ pet }) => {
   const notify = () => toast("Added to all pet.");
 
   return (
-    <div>
-      <div className="card bg-base-100 w-96 shadow-sm bg-[#EBF3EE] hover:border border-[#3D6B4F] transition-all duration-300  hover:-translate-y-1 cursor-pointer">
+    <div >
+      <div className="card bg-base-100 w-85 shadow-sm bg-[#EBF3EE] hover:border border-[#3D6B4F] transition-all duration-300  hover:-translate-y-1 cursor-pointer">
         <div className="relative w-full h-48 overflow-hidden rounded-t-lg">
           <Image
             src={imageUrl}

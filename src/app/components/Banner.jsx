@@ -96,7 +96,7 @@ const Banner = async () => {
               <br /> Bangladesh.
             </p>
           </div>
-          <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 gap-8 mt-20 mb-20">
+          <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-8 mt-20 mb-20">
             {pets.slice(3, 10).map((pet) => (
               <PetCard key={pet._id} pet={pet}></PetCard>
             ))}

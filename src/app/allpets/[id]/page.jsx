@@ -8,17 +8,23 @@ import AdoptRequest from "./AdoptRequest";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
+
 const PetDetailsPage = async ({ params }) => {
   const { id } = await params;
+ 
   const { token } = await auth.api.getToken({
     headers: await headers(),
   });
-  //  console.log("Deleting:", listingId);
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-pet/${id}`, {
-    headers: {
-      authorization: `Bearer ${token}`,
+  console.log(token);
+  
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/all-pet/${id}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
   const pet = await res.json();
 
   //console.log(pet)

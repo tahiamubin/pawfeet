@@ -11,16 +11,20 @@ const page = async () => {
 
   const userEmail = session?.user?.email;
 
-   const { token } = await auth.api.getToken({
+  const { token } = await auth.api.getToken({
     headers: await headers(),
   });
+  console.log("token from listings", token);
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-pet?email=${userEmail}`, {
-    cache: "no-store", 
-    headers: {
-      authorization: `Bearer ${token}`
-    }
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/all-pet?email=${userEmail}`,
+    {
+      cache: "no-store",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    },
+  );
   const pets = await res.json();
 
   return (
@@ -29,7 +33,7 @@ const page = async () => {
       {pets.length === 0 ? (
         <p>You have no listings yet.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-8">
           {pets.map((pet) => (
             <MyListings pets={pet} key={pet._id} />
           ))}

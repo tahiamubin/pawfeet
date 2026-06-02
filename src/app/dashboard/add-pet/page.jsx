@@ -46,6 +46,7 @@ const AddPetPage = () => {
     allPet.email = session?.user?.email;
 
     const { data: tokenData } = await authClient.token();
+    console.log('token from add pet form', tokenData)
 
     const headers = {
       "content-type": "application/json",

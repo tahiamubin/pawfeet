@@ -35,6 +35,7 @@ const AdoptRequest = ({ pet }) => {
     description,
   
   } = pet;
+  const isOwner = user?.email === pet.email
   const handleListings = async () => {
     const listingData = {
       userName: user?.name,
@@ -55,6 +56,7 @@ const AdoptRequest = ({ pet }) => {
       pickupDate,
       requestDate: new Date().toISOString()
     };
+    
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/listing`, {
       method: "POST",
       headers: {
@@ -70,7 +72,34 @@ const AdoptRequest = ({ pet }) => {
 
   return (
     <div>
-      {adopt ? (
+      {
+       isOwner  ? (
+        // 👇 blocked state for the owner
+        <div className="ml-15">
+          <div className="card bg-yellow-50 border border-yellow-600 shadow-xl max-w-sm">
+            <div className="card-body flex-row items-start gap-4 p-5">
+              <div className="w-10 h-10 rounded-full bg-yellow-600 flex items-center justify-center shrink-0 mt-1">
+                {/* lock icon */}
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h2 className="card-title text-yellow-800 text-xl font-bold">
+                  Can't adopt your own pet
+                </h2>
+                <p className="text-neutral-700 text-sm mt-1">
+                  You listed <span className="font-semibold">{petName}</span> for adoption. Manage it from{" "}
+                  <a href="/dashboard/my-listings" className="text-orange-600 underline font-medium">
+                    My Listings
+                  </a>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) :
+      adopt ? (
         <div className="ml-15">
           <div className="card bg-green-50 border border-green-700 shadow-xl max-w-sm ">
             <div className="card-body flex-row items-start gap-4 p-5">
@@ -211,7 +240,7 @@ const AdoptRequest = ({ pet }) => {
             Adopt Now
           </Button>
         </form>
-      )}
+      ) }
     </div>
   );
 };

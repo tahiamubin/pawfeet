@@ -10,6 +10,7 @@ const myRequestPage = async () => {
   const { token } = await auth.api.getToken({
     headers: await headers(),
   });
+  console.log("token from my request", token);
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/listing/${encodeURIComponent(user?.email)}`,
     {
@@ -19,9 +20,9 @@ const myRequestPage = async () => {
     },
   );
   const listings = await res.json();
-  console.log(listings)
+  console.log(listings);
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto pb-10 pt-10">
       <div>
         {listings.map((listing) => (
           <RequestSec listing={listing} key={listing._id}></RequestSec>

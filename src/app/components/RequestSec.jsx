@@ -1,6 +1,10 @@
 "use client"
 
+import toast from "react-hot-toast";
+
 const RequestSec = ({ listing }) => {
+   
+    
   const {
     imageUrl,
     petName,
@@ -13,9 +17,19 @@ const RequestSec = ({ listing }) => {
     pickupDate,
     status,
   } = listing;
+  const handleDelete = async () => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/listing/${_id}`, {
+      method: "DELETE",
+      headers: { "content-type": "application/json" },
+    });
+    const data = await res.json();
+    console.log(data);
+    toast.error("Your request has been deleted");
+  };
+
 
   return (
-    <div className="overflow-x-auto rounded-xl bg-[#FBF8F3]">
+    <div className="overflow-x-auto rounded-xl bg-[#FBF8F3] pb-2">
       <table className="table w-full text-white">
         {/* Static column labels in thead */}
         <thead>
@@ -42,7 +56,7 @@ const RequestSec = ({ listing }) => {
             </td>
             <td className="text-[#5C5C5C]">{status ?? "Pending"}</td>
             <td className="text-right">
-              <div className="badge badge-soft badge-success">Success</div>
+              <div onClick={handleDelete} className="badge badge-soft badge-error">Cancel</div>
             </td>
           </tr>
         </tbody>
